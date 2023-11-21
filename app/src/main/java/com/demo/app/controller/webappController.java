@@ -9,8 +9,10 @@ import javax.sql.rowset.serial.SerialException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +23,6 @@ import com.demo.app.configuration.CustomCookie;
 import com.demo.app.configuration.ResponsePayload;
 import com.demo.app.configuration.ServiceException;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @CrossOrigin
@@ -51,10 +52,21 @@ public class webappController {
 	
 	try {
 		CustomCookie.setCookieOption(request.getSession().getId(), response);
-//		response.setHeader(CONT, null);
 		webapprepo.insertAdmin(admin);
-		System.out.println(admin);
 		return new ResponsePayload("Admin details added successfully.") ;
+		} catch (ServiceException e) {
+			System.out.println(e);
+		}
+	return null;
+	}
+	
+	@DeleteMapping(value = "deleteAdmin")
+    public ResponsePayload deleteAdmin(@RequestParam int id, HttpServletRequest request,HttpServletResponse response) {
+	
+	try {
+		CustomCookie.setCookieOption(request.getSession().getId(), response);
+		webapprepo.deleteAdmin(id);
+		return new ResponsePayload("Admin id  :-" +id+ "  is deleted.") ;
 		} catch (ServiceException e) {
 			System.out.println(e);
 		}

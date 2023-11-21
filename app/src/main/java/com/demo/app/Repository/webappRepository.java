@@ -10,4 +10,6 @@ public interface webappRepository {
 	
 	public void insertAdmin(Admin admin);
 
+	void deleteAdmin(int id);
+
 }

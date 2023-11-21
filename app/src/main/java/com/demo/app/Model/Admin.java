@@ -1,13 +1,19 @@
 package com.demo.app.Model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class Admin {
 	
+	@JsonInclude(JsonInclude.Include.USE_DEFAULTS)
 	private int id;
 	
+	@JsonInclude(JsonInclude.Include.USE_DEFAULTS)
 	private String name;
 	
+	@JsonInclude(JsonInclude.Include.USE_DEFAULTS)
 	private int age;
 	
+	@JsonInclude(JsonInclude.Include.USE_DEFAULTS)
 	private String role;
 	
 	public int getId() {

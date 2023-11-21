@@ -28,6 +28,7 @@ public ResponsePayload(String msg,Object result,HttpStatus ok,boolean success) {
 				
 		this.success = success;
 		this.ok = ok;
+		this.status = 200;
 		this.message = msg;
 		this.result = 	result;
 		

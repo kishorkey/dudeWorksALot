@@ -30,6 +30,9 @@ public class webappRepositoryImp implements webappRepository {
 	@Value("${insertAdmin}")
 	private String insertAdminQuery;
 	
+	@Value("${deleteAdmin}")
+	private String deleteAdminQuery;
+	
 	RowMapper<Admin> adminMapper = (rs, rowNum) -> {
 		Admin admin = new Admin();
 		admin.setId(rs.getInt("id"));
@@ -43,9 +46,7 @@ public class webappRepositoryImp implements webappRepository {
 	public List<Admin> getAdminData()
 	{
 		try {
-//			MapSqlParameterSource param = new MapSqlParameterSource();
-//			param.addValue(id, "id")
-			
+		
 			List<Admin> admin = namedJdbcTemplet.query(getAdminQuery,adminMapper);
 			return admin;
 		}
@@ -60,12 +61,26 @@ public class webappRepositoryImp implements webappRepository {
 	public void insertAdmin(Admin admin)	{
 		try {
 			MapSqlParameterSource param = new MapSqlParameterSource();
-			System.out.println(admin);
 			param.addValue("name",admin.getName());
 			param.addValue("age",admin.getAge());
 			param.addValue("role",admin.getRole());
 			
 			namedJdbcTemplet.query(insertAdminQuery,param,adminMapper);
+//			return admin;
+		}
+		catch (DataAccessException e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		
+	}
+	
+	
+	@Override
+	public void deleteAdmin(int id)	{
+		try {
+			MapSqlParameterSource param = new MapSqlParameterSource();
+			param.addValue("id",id);		
+			namedJdbcTemplet.query(deleteAdminQuery,param,adminMapper);
 //			return admin;
 		}
 		catch (DataAccessException e) {
